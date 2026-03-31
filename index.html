@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Explore India</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+
+<header class="hero home-hero">
+
+    <h1>Explore India</h1>
+    <p>Discover culture, heritage, and natural beauty</p>
+    <canvas id="travelCanvas"></canvas>
+
+</header>
+<nav class="navbar">
+    <a href="destinations.html">Destinations</a>
+    <a href="booking.html">Booking</a>
+    <a href="contact.html">Contact</a>
+</nav>
+
+
+<section class="about">
+    <h2>Discover India</h2>
+    <p>
+        India is a land of rich traditions, diverse cultures, and breathtaking landscapes.
+        From majestic monuments to serene backwaters, India offers unforgettable experiences.
+    </p>
+</section>
+
+<section class="destinations">
+    <h2>Popular Destinations</h2>
+    <div class="destination-grid">
+        <div class="place">Delhi</div>
+        <div class="place">Agra</div>
+        <div class="place">Kerala</div>
+        <div class="place">Goa</div>
+    </div>
+</section>
+
+<section class="gallery">
+    <h2>Gallery</h2>
+
+    <div class="gallery-grid">
+
+        <div class="home-img">
+            <img src="images/Taj-Mahal.jpg" alt="Taj Mahal">
+            <div class="home-text">Taj Mahal – A symbol of love and heritage</div>
+        </div>
+
+        <div class="home-img">
+            <img src="images/kerala.jpg">
+             <div class="home-text">Kerala Backwaters – Calm and serene waterways</div>
+        </div>
+
+        <div class="home-img">
+            <img src="images/Hawa-Mahal-the-story.avif" alt="Hawa Mahal">
+            <div class="home-text">Hawa Mahal – The Palace of Winds, Jaipur</div>
+        </div>
+
+    </div>
+</section>
+<button id="topBtn" onclick="goTop()" style="
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    padding:10px 14px;
+    border:none;
+    background:black;
+    color:white;
+    border-radius:50%;
+    cursor:pointer;
+    display:none;
+">↑</button>
+
+<footer class="footer">
+    <p>Explore Indian Tourism</p>
+    
+</footer>
+<script>
+window.onscroll = function () {
+    document.getElementById("topBtn").style.display =
+        window.scrollY > 200 ? "block" : "none";
+};
+
+function goTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+
+const canvas = document.getElementById("travelCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = 300;
+
+// golden ratio
+const phi = (1 + Math.sqrt(5)) / 2;
+
+let t = 500;
+let mode = "spiral"; // "spiral" or "straight"
+let x = canvas.width / 2;
+let y = canvas.height / 2;
+function drawPlane(x, y) {
+    ctx.fillStyle = "white";
+
+    ctx.beginPath();
+
+    // main clean triangle (paper plane)
+    ctx.moveTo(x, y);             // tip
+    ctx.lineTo(x - 60, y - 20);   // top back
+    ctx.lineTo(x - 60, y + 20);   // bottom back
+
+    ctx.closePath();
+    ctx.fill();
+
+    // optional center fold (nice detail)
+    ctx.strokeStyle = "#ddd";
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 60, y);
+    ctx.stroke();
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let a = 2;
+    let b = 0.15;
+
+    if (mode === "spiral") {
+        let angle = t * 0.05;
+        let r = a * Math.exp(b * angle);
+
+        x = canvas.width / 2 + r * Math.cos(angle);
+        y = canvas.height / 2 + r * Math.sin(angle);
+
+        t -= 1;
+
+        // when near center → switch mode
+        if (r < 5) {
+            mode = "straight";
+        }
+    }
+
+    else if (mode === "straight") {
+        x += 4; // move right
+
+        // exit screen → reset
+        if (x > canvas.width + 50) {
+            t = 200;
+            mode = "spiral";
+        }
+    }
+
+    drawPlane(x, y);
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>

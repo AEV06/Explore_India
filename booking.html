@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking - Explore India</title>
+    <link rel="stylesheet" href="design.css">
+
+    <style>
+        .booking {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .booking h2 {
+            text-align: center;
+            color: #023e8a;
+            margin-bottom: 20px;
+        }
+
+        .booking label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: bold;
+        }
+
+        .booking input,
+        .booking textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .booking textarea {
+            resize: none;
+            height: 70px;
+        }
+
+        .booking button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background-color: #023e8a;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .booking button:hover {
+            background-color: #0077b6;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="hero booking-hero">
+
+    <h1>Booking</h1>
+    <p>Plan your journey across India</p>
+</header>
+
+<nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="destinations.html">Destinations</a>
+    <a href="contact.html">Contact</a>
+</nav>
+
+<section class="booking">
+    <h2>Book Your Trip</h2>
+
+    <form onsubmit="submitBooking(event)">
+
+        <label>Full Name</label>
+        <input type="text" id="name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Phone</label>
+        <input type="tel" id="phone" required>
+
+        <label>Trip Type</label>
+        <div>
+            <input type="radio" name="trip" value="one" checked> One Way
+            <input type="radio" name="trip" value="round"> Round Trip
+        </div>
+
+     
+<label>Select Destination</label>
+<select id="destination" required>
+    <option value="">-- Select Destination --</option>
+
+    <!-- Temples -->
+    <option value="Meenakshi Temple" data-price="2000">Meenakshi Temple – ₹2000</option>
+    <option value="Golden Temple" data-price="2000">Golden Temple – ₹2000</option>
+    <option value="Tirupati Balaji Temple" data-price="2000">Tirupati Balaji Temple – ₹2000</option>
+
+    <!-- Beaches -->
+    <option value="Marina Beach" data-price="3000">Marina Beach – ₹3000</option>
+    <option value="Varkala Beach" data-price="3000">Varkala Beach – ₹3000</option>
+    <option value="Kovalam Beach" data-price="3000">Kovalam Beach – ₹3000</option>
+    <option value="Baga Beach" data-price="4000">Baga Beach – ₹4000</option>
+    <option value="Radhanagar Beach" data-price="4000">Radhanagar Beach – ₹4000</option>
+
+    <!-- Hill Stations -->
+    <option value="Ooty" data-price="3500">Ooty – ₹3500</option>
+    <option value="Munnar" data-price="3500">Munnar – ₹3500</option>
+    <option value="Wayanad" data-price="3500">Wayanad – ₹3500</option>
+    <option value="Darjeeling" data-price="4000">Darjeeling – ₹4000</option>
+    <option value="Shimla" data-price="4000">Shimla – ₹4000</option>
+    <option value="Manali" data-price="4500">Manali – ₹4500</option>
+    <option value="Spiti Valley" data-price="4500">Spiti Valley – ₹4500</option>
+
+    <!-- Monuments -->
+    <option value="Taj Mahal" data-price="2500">Taj Mahal – ₹2500</option>
+    <option value="Hawa Mahal" data-price="2500">Hawa Mahal – ₹2500</option>
+    <option value="Amber Fort" data-price="2500">Amber Fort – ₹2500</option>
+    <option value="Udaipur City Palace" data-price="2500">Udaipur City Palace – ₹2500</option>
+    <option value="Statue of Unity" data-price="3000">Statue of Unity – ₹3000</option>
+</select>
+
+
+        <label>Travel Date</label>
+        <input type="date" id="date" required>
+
+        <label>Number of Travelers</label>
+        <input type="number" id="travelers" min="1" max="10" required>
+
+        <button type="submit">Calculate & Book</button>
+    </form>
+<p id="livePrice" style="margin-top:10px; font-weight:bold; color:#0077b6;"></p>
+    <!-- Booking Summary -->
+    <div id="summary" style="display:none; margin-top:20px;">
+        <h3 style="color:#023e8a;">Booking Summary</h3>
+        <p id="summaryText"></p>
+    </div>
+</section>
+
+
+<!-- Scroll to Top Button -->
+<button id="topBtn" onclick="goTop()" style="
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    padding:10px 14px;
+    border:none;
+    background:black;
+    color:white;
+    border-radius:50%;
+    cursor:pointer;
+    display:none;
+">↑</button>
+
+<footer class="footer">
+    <p>Explore Indian Tourism</p>
+</footer>
+
+<script>
+function submitBooking(event) {
+    event.preventDefault();
+
+    const destinationSelect = document.getElementById("destination");
+    const destination = destinationSelect.value;
+
+    const basePrice = parseInt(destinationSelect.selectedOptions[0].dataset.price);
+    const travelers = parseInt(document.getElementById("travelers").value);
+
+    const tripType = document.querySelector('input[name="trip"]:checked').value;
+
+    let total = basePrice * travelers;
+
+    if (tripType === "round") {
+        total = total * 2;
+    }
+
+    document.getElementById("summaryText").innerHTML = `
+        <strong>Destination:</strong> ${destination}<br>
+        <strong>Base Price:</strong> ₹${basePrice}<br>
+        <strong>Trip Type:</strong> ${tripType}<br>
+        <strong>Travelers:</strong> ${travelers}<br>
+        <strong>Total Price:</strong> ₹${total}
+    `;
+
+    document.getElementById("summary").style.display = "block";
+}
+
+// Event listeners
+document.getElementById("destination").addEventListener("change", updatePrice);
+document.getElementById("travelers").addEventListener("input", updatePrice);
+
+document.querySelectorAll('input[name="trip"]').forEach(radio => {
+    radio.addEventListener("change", updatePrice);
+});
+
+// Price calculation
+function updatePrice() {
+    const destinationSelect = document.getElementById("destination");
+
+    if (!destinationSelect.value) return;
+
+    const price = parseInt(destinationSelect.selectedOptions[0].dataset.price);
+    const travelers = parseInt(document.getElementById("travelers").value) || 1;
+
+    const tripType = document.querySelector('input[name="trip"]:checked').value;
+
+    let total = price * travelers;
+
+    if (tripType === "round") {
+        total = total * 2;
+    }
+
+    document.getElementById("livePrice").innerText =
+        "Estimated Price: ₹" + total;
+}
+</script>
+</body>
+</html>
