@@ -31,31 +31,47 @@
 <section class="destinations">
     <h2>Popular Destinations</h2>
     <div class="destination-grid">
+        <a href="booking.html">
         <div class="place">Delhi</div>
+        </a>
+        <a href="booking.html">
         <div class="place">Agra</div>
+        </a>
+        <a href="booking.html">
         <div class="place">Kerala</div>
+        </a>
+        <a href="booking.html">
         <div class="place">Goa</div>
+        </a>
     </div>
 </section>
 
 <section class="gallery">
-    <h2>Gallery</h2>
+   <h3>Diverse in beauty</h3>
 
     <div class="gallery-grid">
+        
 
         <div class="home-img">
+            <a href="booking.html">
             <img src="images/Taj-Mahal.jpg" alt="Taj Mahal">
             <div class="home-text">Taj Mahal – A symbol of love and heritage</div>
+            </a>
         </div>
+        
 
         <div class="home-img">
+            <a href="booking.html">
             <img src="images/kerala.jpg">
              <div class="home-text">Kerala Backwaters – Calm and serene waterways</div>
+             </a>
         </div>
 
         <div class="home-img">
+            <a href="booking.html">
             <img src="images/Hawa-Mahal-the-story.avif" alt="Hawa Mahal">
             <div class="home-text">Hawa Mahal – The Palace of Winds, Jaipur</div>
+            </a>
         </div>
 
     </div>
@@ -127,35 +143,19 @@ function drawPlane(x, y) {
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    let a = 2;
-    let b = 0.15;
-
-    if (mode === "spiral") {
-        let angle = t * 0.05;
-        let r = a * Math.exp(b * angle);
-
-        x = canvas.width / 2 + r * Math.cos(angle);
-        y = canvas.height / 2 + r * Math.sin(angle);
-
-        t -= 1;
-
-        // when near center → switch mode
-        if (r < 5) {
-            mode = "straight";
-        }
-    }
-
-    else if (mode === "straight") {
-        x += 4; // move right
-
-        // exit screen → reset
-        if (x > canvas.width + 50) {
-            t = 200;
-            mode = "spiral";
-        }
-    }
-
     drawPlane(x, y);
+
+    // move right
+    x += 3;
+
+    
+    y -= 0.3;
+
+    // reset when out of screen
+    if (x > canvas.width + 50) {
+        x = canvas.width / 2;
+        y = canvas.height / 2;
+    }
 
     requestAnimationFrame(animate);
 }
