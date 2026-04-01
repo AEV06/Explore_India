@@ -89,10 +89,18 @@
         <input type="tel" id="phone" required>
 
         <label>Trip Type</label>
-        <div>
-            <input type="radio" name="trip" value="one" checked> One Way
-            <input type="radio" name="trip" value="round"> Round Trip
-        </div>
+
+<div class="trip-type">
+    <label>
+        <input type="radio" name="trip" value="one" checked>
+        One Way
+    </label>
+
+    <label>
+        <input type="radio" name="trip" value="round">
+        Round Trip
+    </label>
+</div>
 
      
 <label>Select Destination</label>
@@ -137,6 +145,8 @@
 
         <button type="submit">Calculate & Book</button>
     </form>
+    <button type="button" onclick="clearBooking()">Cancel Booking</button>
+
 <p id="livePrice" style="margin-top:10px; font-weight:bold; color:#0077b6;"></p>
     <!-- Booking Summary -->
     <div id="summary" style="display:none; margin-top:20px;">
@@ -182,6 +192,18 @@ function submitBooking(event) {
         total = total * 2;
     }
 
+    // SAVE DATA
+    localStorage.setItem("bookingData", JSON.stringify({
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        date: document.getElementById("date").value,
+        destination: destination,
+        travelers: travelers,
+        tripType: tripType
+    }));
+
+    // SHOW SUMMARY
     document.getElementById("summaryText").innerHTML = `
         <strong>Destination:</strong> ${destination}<br>
         <strong>Base Price:</strong> ₹${basePrice}<br>
@@ -193,15 +215,7 @@ function submitBooking(event) {
     document.getElementById("summary").style.display = "block";
 }
 
-// Event listeners
-document.getElementById("destination").addEventListener("change", updatePrice);
-document.getElementById("travelers").addEventListener("input", updatePrice);
-
-document.querySelectorAll('input[name="trip"]').forEach(radio => {
-    radio.addEventListener("change", updatePrice);
-});
-
-// Price calculation
+// PRICE UPDATE
 function updatePrice() {
     const destinationSelect = document.getElementById("destination");
 
@@ -220,6 +234,73 @@ function updatePrice() {
 
     document.getElementById("livePrice").innerText =
         "Estimated Price: ₹" + total;
+}
+
+// LOAD SAVED DATA + SUMMARY
+window.onload = function () {
+    const data = JSON.parse(localStorage.getItem("bookingData"));
+
+    if (data) {
+        document.getElementById("name").value = data.name || "";
+        document.getElementById("email").value = data.email || "";
+        document.getElementById("phone").value = data.phone || "";
+        document.getElementById("destination").value = data.destination || "";
+        document.getElementById("travelers").value = data.travelers || "";
+        document.getElementById("date").value = data.date || "";
+
+        // set trip type
+        const trip = document.querySelector(`input[name="trip"][value="${data.tripType}"]`);
+        if (trip) trip.checked = true;
+
+        // REBUILD SUMMARY
+        const option = document.querySelector(`#destination option[value="${data.destination}"]`);
+        const basePrice = option ? parseInt(option.dataset.price) : 0;
+
+        let total = basePrice * data.travelers;
+
+        if (data.tripType === "round") {
+            total = total * 2;
+        }
+
+        document.getElementById("summaryText").innerHTML = `
+            <strong>Destination:</strong> ${data.destination}<br>
+            <strong>Base Price:</strong> ₹${basePrice}<br>
+            <strong>Trip Type:</strong> ${data.tripType}<br>
+            <strong>Travelers:</strong> ${data.travelers}<br>
+            <strong>Total Price:</strong> ₹${total}
+        `;
+
+        document.getElementById("summary").style.display = "block";
+
+        updatePrice();
+    }
+
+    // attach listeners AFTER load
+    document.getElementById("destination").addEventListener("change", updatePrice);
+    document.getElementById("travelers").addEventListener("input", updatePrice);
+
+    document.querySelectorAll('input[name="trip"]').forEach(radio => {
+        radio.addEventListener("change", updatePrice);
+    });
+};
+
+// CLEAR BOOKING
+function clearBooking() {
+    localStorage.removeItem("bookingData");
+
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("destination").value = "";
+    document.getElementById("travelers").value = "";
+    document.getElementById("date").value = "";
+
+    document.querySelector('input[name="trip"][value="one"]').checked = true;
+
+    document.getElementById("livePrice").innerText = "";
+    document.getElementById("summary").style.display = "none";
+
+    alert("Booking cancelled!");
 }
 </script>
 </body>
