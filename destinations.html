@@ -2,7 +2,18 @@
 <html>
 <head>
     <title>Top Destinations</title>
-<link rel="stylesheet" href="destinations.css">
+    <link rel="stylesheet" href="destinations.css">
+
+    <style>
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .gallery-item a {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,107 +35,153 @@
     <button onclick="filterSelection('hill')">Hill Stations</button>
     <button onclick="filterSelection('monument')">Monuments</button>
 </section>
-
+<input type="text" id="searchBox" placeholder="Search destinations..." 
+onkeyup="searchDestinations()"
+style="padding:10px; width:80%; margin:20px auto; display:block;">
 <section class="gallery-container">
 
     <div class="gallery-item temple">
-        <img src="images\meenakshi-amman-temple-india.avif">
-        <p>Meenakshi Temple</p>
+        <a href="booking.html">
+            <img src="images/meenakshi-amman-temple-india.avif">
+            <p>Meenakshi Temple</p>
+        </a>
     </div>
 
     <div class="gallery-item beach">
-        <img src="images\marina-beach-chennai-tourism-entry-fee-timings-holidays-reviews-header.jpg">
-        <p>Marina Beach</p>
+        <a href="booking.html">
+            <img src="images/marina-beach-chennai-tourism-entry-fee-timings-holidays-reviews-header.jpg">
+            <p>Marina Beach</p>
+        </a>
     </div>
 
     <div class="gallery-item hill">
-        <img src="images\ooty-lake-header-ooty-tourism.jpg">
-        <p>Ooty</p>
+        <a href="booking.html">
+            <img src="images/ooty-lake-header-ooty-tourism.jpg">
+            <p>Ooty</p>
+        </a>
     </div>
 
     <div class="gallery-item monument">
-        <img src="images\GettyImages-873536102.webp">
-        <p>Taj Mahal</p>
+        <a href="booking.html">
+            <img src="images/GettyImages-873536102.webp">
+            <p>Taj Mahal</p>
+        </a>
     </div>
-    <div class="gallery-item monument">
-    <img src="images\city-palace-udaipur-rajasthan-7-musthead-hero.jpg">
-    <p>Udaipur City Palace</p>
-</div>
 
+    <div class="gallery-item monument">
+        <a href="booking.html">
+            <img src="images/city-palace-udaipur-rajasthan-7-musthead-hero.jpg">
+            <p>Udaipur City Palace</p>
+        </a>
+    </div>
 
     <div class="gallery-item hill">
-        <img src="images\1-the-land-of-the-thunderbolt-darjeeling-west-bengal-city-ff.jpg">
-        <p>Darjeeling</p>
+        <a href="booking.html">
+            <img src="images/1-the-land-of-the-thunderbolt-darjeeling-west-bengal-city-ff.jpg">
+            <p>Darjeeling</p>
+        </a>
     </div>
 
     <div class="gallery-item temple">
-        <img src="images\The_Golden_Temple_of_Amrithsar_7.jpg.webp">
-        <p>Golden Temple</p>
+        <a href="booking.html">
+            <img src="images/The_Golden_Temple_of_Amrithsar_7.jpg.webp">
+            <p>Golden Temple</p>
+        </a>
     </div>
-<div class="gallery-item beach">
-    <img src="images\m_activities_varkala_varkala_beach_l_403_537.jpg">
-    <p>Varkala Beach</p>
-</div>
 
-<div class="gallery-item beach">
-    <img src="images\59486326.avif">
-    <p>Baga Beach</p>
-</div>
+    <div class="gallery-item beach">
+        <a href="booking.html">
+            <img src="images/m_activities_varkala_varkala_beach_l_403_537.jpg">
+            <p>Varkala Beach</p>
+        </a>
+    </div>
 
-<div class="gallery-item beach">
-    <img src="images\Radhanagar-beach-at-swaraj-dweep-havelock.webp">
-    <p>Radhanagar Beach</p>
-</div>
+    <div class="gallery-item beach">
+        <a href="booking.html">
+            <img src="images/59486326.avif">
+            <p>Baga Beach</p>
+        </a>
+    </div>
 
-<div class="gallery-item beach">
-    <img src="images\01KovalamBeach%26Kerala.jpg">
-    <p>Kovalam Beach</p>
-</div>
-<div class="gallery-item hill">
-    <img src="images\agjodlg1fbske9mdrsoc.avif">
-    <p>Manali</p>
-</div>
+    <div class="gallery-item beach">
+        <a href="booking.html">
+            <img src="images/Radhanagar-beach-at-swaraj-dweep-havelock.webp">
+            <p>Radhanagar Beach</p>
+        </a>
+    </div>
 
-<div class="gallery-item hill">
-    <img src="images\images.jpg">
-    <p>Shimla</p>
-</div>
+    <div class="gallery-item beach">
+        <a href="booking.html">
+            <img src="images/01KovalamBeach%26Kerala.jpg">
+            <p>Kovalam Beach</p>
+        </a>
+    </div>
 
-<div class="gallery-item hill">
-    <img src="images/1576477108_1487749794_spiti-valley-key-kibber-1.jpg.webp.avif">
-    <p>Spiti Valley</p>
-</div>
-<div class="gallery-item hill">
-    <img src="images/munnar-1723101236_d37cb4a4260539e5debd.webp">
-    <p>Munnar</p>
-</div>
+    <div class="gallery-item hill">
+        <a href="booking.html">
+            <img src="images/agjodlg1fbske9mdrsoc.avif">
+            <p>Manali</p>
+        </a>
+    </div>
 
-<div class="gallery-item hill">
-    <img src="images/glass-bridge-900-kandi-wayanad-768x768.jpg">
-    <p>Wayanad</p>
-</div>
-<div class="gallery-item monument">
-    <img src="images/Hawa_Mahal_Indian_060125.jpg">
-    <p>Hawa Mahal</p>
-</div>
+    <div class="gallery-item hill">
+        <a href="booking.html">
+            <img src="images/images.jpg">
+            <p>Shimla</p>
+        </a>
+    </div>
 
-<div class="gallery-item monument">
-    <img src="images/amberr.jpg.webp">
-    <p>Amber Fort</p>
-</div>
+    <div class="gallery-item hill">
+        <a href="booking.html">
+            <img src="images/1576477108_1487749794_spiti-valley-key-kibber-1.jpg.webp.avif">
+            <p>Spiti Valley</p>
+        </a>
+    </div>
 
+    <div class="gallery-item hill">
+        <a href="booking.html">
+            <img src="images/munnar-1723101236_d37cb4a4260539e5debd.webp">
+            <p>Munnar</p>
+        </a>
+    </div>
 
-<div class="gallery-item monument">
-    <img src="images/thumb_900_720_88102_banner1.jpg">
-    <p>Statue of Unity</p>
-</div>
-<div class="gallery-item temple">
-    <img src="images/Tirumala_Anand_nilayam4653.jpg">
-    <p>Tirupati Balaji Temple</p>
-</div>
+    <div class="gallery-item hill">
+        <a href="booking.html">
+            <img src="images/glass-bridge-900-kandi-wayanad-768x768.jpg">
+            <p>Wayanad</p>
+        </a>
+    </div>
 
+    <div class="gallery-item monument">
+        <a href="booking.html">
+            <img src="images/Hawa_Mahal_Indian_060125.jpg">
+            <p>Hawa Mahal</p>
+        </a>
+    </div>
+
+    <div class="gallery-item monument">
+        <a href="booking.html">
+            <img src="images/amberr.jpg.webp">
+            <p>Amber Fort</p>
+        </a>
+    </div>
+
+    <div class="gallery-item monument">
+        <a href="booking.html">
+            <img src="images/thumb_900_720_88102_banner1.jpg">
+            <p>Statue of Unity</p>
+        </a>
+    </div>
+
+    <div class="gallery-item temple">
+        <a href="booking.html">
+            <img src="images/Tirumala_Anand_nilayam4653.jpg">
+            <p>Tirupati Balaji Temple</p>
+        </a>
+    </div>
 
 </section>
+
 <button id="topBtn" onclick="goTop()" style="
     position:fixed;
     bottom:20px;
@@ -137,6 +194,7 @@
     cursor:pointer;
     display:none;
 ">↑</button>
+
 <footer class="footer">
     <p> Explore Indian Tourism</p>
 </footer>
@@ -155,5 +213,3 @@ function goTop() {
 
 </body>
 </html>
-
-
